@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Lite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<html>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        color: #282828;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    .search-container {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    #search {
+        width: 300px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 20px 0 0 20px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    #search:focus {
+        border-color: #007bff;
+    }
+
+    #submit {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 0 20px 20px 0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    #submit:hover {
+        background-color: #0056b3;
+    }
+
+    #video {
+        width: 100%;
+        max-width: 600px; /* Adjust this value to resize the video */
+        border-radius: 8px;
+        background-color: #e9e9e9; /* Placeholder color */
+        /* For responsive iframe */
+        position: relative;
+        padding-bottom: 30.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .video-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+    <h1>YouTube Lite</h1>
+    <form class="search-container" onsubmit="return false;"> <!-- onsubmit prevents page reload -->
+        <input placeholder="Search" id="search">
+        <button id="submit">Submit</button>
+    </form>
+    <div id="video"></div>
+</body>
+<script src="app.js"></script>
+</html>
