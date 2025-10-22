@@ -1,20 +1,22 @@
 const input=document.getElementById("search");
 const submit=document.getElementById("submit");
 const video=document.getElementById("video");
+const sort=document.getElementById("sort");
 
-async function get(value){
-    const response= await fetch(`http://localhost:3000/search?value=${encodeURIComponent(value)}`)
+
+async function get(value,count){
+    const response= await fetch(`http://localhost:3000/search?count=${count}&value=${encodeURIComponent(value)}`)
     const data1=await response.json();
     return await data1;
 }
 submit.addEventListener("click", async ()=>{
     value=input.value;
-    console.log(value);
-    x=await get(value); 
+    count=sort.value;
+    console.log(count);
+    x=await get(value,count); 
     console.log(x)
     id=x.items[0].id.videoId;
     video.innerHTML="";
-
     x.items.forEach(element => {
         const container=document.createElement("div");
         // These styles create a responsive container for each iframe
