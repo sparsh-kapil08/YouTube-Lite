@@ -17,15 +17,19 @@ submit.addEventListener("click", async ()=>{
 
     x.items.forEach(element => {
         const container=document.createElement("div");
+        // These styles create a responsive container for each iframe
         container.className="video-container";
+        container.style.position = 'relative';
+        container.style.paddingBottom = '20.25%'; // 16:9 aspect ratio
+        container.style.height = '0';
+        container.style.overflow = 'hidden';
+        container.style.marginBottom = '20px'; // Space between videos
         video.appendChild(container);
         const iframe = document.createElement("iframe");
         iframe.src = `https://www.youtube.com/embed/${element.id.videoId}`;
         iframe.allowFullscreen = true
         iframe.className="video-iframe"
         container.appendChild(iframe);
-        document.createElement("br");
-
     });  
 });
 //
