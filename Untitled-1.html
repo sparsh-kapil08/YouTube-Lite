@@ -10,13 +10,14 @@
     <style>
     body {
         font-family: 'Roboto', sans-serif; /* Use a modern, clean font */
-        background-color: #f1f1f1; /* Lighter grey background */
-        color: #333; /* Dark grey text for readability */
+        background-color: #181818; /* Dark background */
+        color: #e0e0e0; /* Light grey text for readability */
         margin: 0; /* Remove default body margin */
         padding: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
+        min-height: 100vh; /* Ensure body takes full viewport height */
     }
 
     .header-container {
@@ -24,15 +25,17 @@
         align-items: center;
         gap: 1rem;
         margin-bottom: 2rem; /* Space below the header */
+        padding: 1rem 0;
     }
 
     .logo {
         width: 100px;
         height: auto;
+        filter: invert(100%); /* Invert logo colors for dark background if it's a dark logo */
     }
 
     h1 {
-        color: #282828;
+        color: #3ea6ff; /* YouTube-like blue */
         font-weight: 700;
         margin: 0;
     }
@@ -42,29 +45,35 @@
         gap: 0.5rem;
         margin-bottom: 2rem; /* Space below the search bar */
         align-items: center;
+        width: 100%;
+        max-width: 700px; /* Limit search bar width */
+        justify-content: center;
     }
 
     #search {
-        width: 300px;
+        flex-grow: 1; /* Allow search input to take available space */
+        max-width: 400px;
         padding: 0.75rem 1rem;
-        border: 1px solid #ccc;
+        border: 1px solid #303030;
         border-radius: 40px 0 0 40px; /* Rounded corners */
         font-size: 1rem;
         outline: none;
         transition: border-color 0.2s;
+        background-color: #121212; /* Darker input background */
+        color: #e0e0e0; /* Light text */
     }
 
     #search:focus {
-        border-color: #0d6efd; /* Highlight on focus */
-        box-shadow: 0 0 5px rgba(13,110,253,0.5);
+        border-color: #3ea6ff; /* Blue highlight on focus */
+        box-shadow: 0 0 5px rgba(62, 166, 255, 0.5);
     }
 
     #submit {
         padding: 0.75rem 1.5rem;
-        border: 1px solid #ccc;
+        border: 1px solid #303030;
         border-left: none;
-        background-color: #f8f8f8;
-        color: #333;
+        background-color: #3a3a3a; /* Darker button background */
+        color: #e0e0e0; /* Light text */
         font-size: 1rem;
         font-weight: 500;
         border-radius: 0 40px 40px 0;
@@ -73,13 +82,14 @@
     }
 
     #submit:hover {
-        background-color: #e9e9e9;
+        background-color: #555555; /* Lighter on hover */
     }
 
     #sort {
         padding: 0.75rem 1rem;
-        border: 1px solid #ccc;
-        background-color: white;
+        border: 1px solid #303030;
+        background-color: #121212; /* Darker dropdown background */
+        color: #e0e0e0; /* Light text */
         border-radius: 8px;
         font-size: 1rem;
         cursor: pointer;
@@ -92,6 +102,10 @@
         /* Responsive grid: fits as many columns as possible with a min width of 300px */
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem 1.5rem; /* Space between videos */
+        padding: 2rem; /* Padding around the video grid */
+        background: linear-gradient(to bottom, #1a1a1a, #000000); /* Black background with gradient */
+        border-radius: 15px; /* Slightly rounded corners for the video area */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
     }
 
     .video-container {
@@ -103,7 +117,7 @@
     .video-wrapper {
         position: relative; /* Needed for positioning the overlay and iframe */
         padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
-        background-color: #e0e0e0; /* Placeholder color */
+        background-color: #333333; /* Darker placeholder color */
         border-radius: 12px; /* Rounded corners for the video */
         overflow: hidden; /* Keeps the overlay and iframe within the rounded corners */
         margin-bottom: 0.75rem;
@@ -126,7 +140,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black */
+        background-color: rgba(255, 255, 255, 0.15); /* Subtle white overlay on hover for dark theme */
         opacity: 0; /* Hidden by default */
         transition: opacity 0.2s ease-in-out; /* Smooth transition */
     }
@@ -139,13 +153,12 @@
         font-weight: 500;
         font-size: 1rem;
         line-height: 1.4;
-        color: #0f0f0f;
+        color: #e0e0e0; /* Light grey title */
         margin: 0;
     }
 </style>
 <body>
     <div class="header-container">
-        <!-- YouTube-style SVG Logo -->
         <img src="data:image/png;base64,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" alt="YouTube Lite Logo" class="logo">
         <h1>YouTube Lite</h1>
     </div>
