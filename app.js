@@ -17,21 +17,30 @@ submit.addEventListener("click", async ()=>{
     console.log(x)
     id=x.items[0].id.videoId;
     video.innerHTML="";
+
     x.items.forEach(element => {
-        const container=document.createElement("div");
-        // These styles create a responsive container for each iframe
-        container.className="video-container";
-        container.style.position = 'relative';
-        container.style.paddingBottom = '20.25%'; // 16:9 aspect ratio
-        container.style.height = '0';
-        container.style.overflow = 'hidden';
-        container.style.marginBottom = '20px'; // Space between videos
-        video.appendChild(container);
+        // Create the main container for one video item
+        const videoContainer = document.createElement("div");
+        videoContainer.className = "video-container";
+
+        // Create the wrapper that maintains the 16:9 aspect ratio
+        const videoWrapper = document.createElement("div");
+        videoWrapper.className = "video-wrapper";
+
+        // Create the iframe for video playback
         const iframe = document.createElement("iframe");
         iframe.src = `https://www.youtube.com/embed/${element.id.videoId}`;
         iframe.allowFullscreen = true
         iframe.className="video-iframe"
-        container.appendChild(iframe);
+        videoWrapper.appendChild(iframe);
+
+        const title = document.createElement("h3");
+        title.className = "video-title";
+        title.textContent = element.snippet.title;
+
+        // Append the video wrapper and title to the main container
+        videoContainer.append(videoWrapper, title);
+        video.appendChild(videoContainer);
     });  
 });
 //
