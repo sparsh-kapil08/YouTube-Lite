@@ -8,18 +8,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+    :root {
+        --background-color: #121212;
+        --surface-color: #1e1e1e;
+        --primary-text-color: #e0e0e0;
+        --secondary-text-color: #a0a0a0;
+        --accent-color: #3ea6ff;
+        --accent-glow: rgba(62, 166, 255, 0.5);
+        --border-color: #303030;
+        --hover-color: #555555;
+    }
+
     body {
         font-family: 'Roboto', sans-serif; /* Use a modern, clean font */
-        background-color: #181818; /* Dark background */
-        color: #e0e0e0; /* Light grey text for readability */
+        background-color: var(--background-color);
+        /* The background is now a large, soft radial gradient centered on the mouse position */
+        background-image: radial-gradient(
+            200px circle at var(--mouse-x) var(--mouse-y),
+            var(--accent-glow),
+            transparent 40%);
+        color: var(--primary-text-color); /* Light grey text for readability */
         margin: 0; /* Remove default body margin */
         padding: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         min-height: 100vh; /* Ensure body takes full viewport height */
+        transition: background 0.2s; /* Smooth transition for the background effect */
     }
-
     .header-container {
         display: flex;
         align-items: center;
@@ -27,19 +43,19 @@
         margin-bottom: 2rem; /* Space below the header */
         padding: 1rem 0;
     }
-
     .logo {
         width: 100px;
         height: auto;
         filter: invert(100%); /* Invert logo colors for dark background if it's a dark logo */
     }
-
     h1 {
-        color: #3ea6ff; /* YouTube-like blue */
+        color: var(--accent-color); /* YouTube-like blue */
         font-weight: 700;
         margin: 0;
+        text-shadow:
+            0 0 5px var(--accent-glow),
+            0 0 10px var(--accent-glow);
     }
-
     .search-container {
         display: flex;
         gap: 0.5rem;
@@ -49,52 +65,52 @@
         max-width: 700px; /* Limit search bar width */
         justify-content: center;
     }
-
     #search {
         flex-grow: 1; /* Allow search input to take available space */
         max-width: 400px;
         padding: 0.75rem 1rem;
-        border: 1px solid #303030;
+        border: 1px solid var(--border-color);
         border-radius: 40px 0 0 40px; /* Rounded corners */
         font-size: 1rem;
         outline: none;
-        transition: border-color 0.2s;
-        background-color: #121212; /* Darker input background */
-        color: #e0e0e0; /* Light text */
+        transition: all 0.3s ease;
+        background-color: var(--surface-color); /* Darker input background */
+        color: var(--primary-text-color); /* Light text */
     }
-
     #search:focus {
-        border-color: #3ea6ff; /* Blue highlight on focus */
-        box-shadow: 0 0 5px rgba(62, 166, 255, 0.5);
+        border-color: var(--accent-color); /* Blue highlight on focus */
+        box-shadow: 0 0 8px var(--accent-glow), 0 0 12px var(--accent-glow);
     }
-
     #submit {
         padding: 0.75rem 1.5rem;
-        border: 1px solid #303030;
+        border: 1px solid var(--border-color);
         border-left: none;
-        background-color: #3a3a3a; /* Darker button background */
-        color: #e0e0e0; /* Light text */
+        background-color: #3a3a3a;
+        color: var(--primary-text-color);
         font-size: 1rem;
         font-weight: 500;
         border-radius: 0 40px 40px 0;
         cursor: pointer;
-        transition: background-color 0.2s;
+        transition: all 0.3s ease;
     }
-
     #submit:hover {
-        background-color: #555555; /* Lighter on hover */
+        background-color: var(--hover-color);
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
     }
-
     #sort {
         padding: 0.75rem 1rem;
-        border: 1px solid #303030;
-        background-color: #121212; /* Darker dropdown background */
-        color: #e0e0e0; /* Light text */
+        border: 1px solid var(--border-color);
+        background-color: var(--surface-color);
+        color: var(--primary-text-color);
         border-radius: 8px;
         font-size: 1rem;
         cursor: pointer;
+        transition: all 0.3s ease;
     }
-
+    #sort:hover {
+        background-color: #3a3a3a;
+        border-color: var(--secondary-text-color);
+    }
     #video {
         width: 90%;
         max-width: 1400px;
@@ -102,27 +118,27 @@
         /* Responsive grid: fits as many columns as possible with a min width of 300px */
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem 1.5rem; /* Space between videos */
-        padding: 2rem; /* Padding around the video grid */
-        background: linear-gradient(to bottom, #1a1a1a, #000000); /* Black background with gradient */
-        border-radius: 15px; /* Slightly rounded corners for the video area */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        padding: 1rem; /* Padding around the video grid */
     }
-
     .video-container {
         display: flex;
         flex-direction: column;
         cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 12px; /* Match video-wrapper radius */
     }
-
+    .video-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 12px rgba(62, 166, 255, 0.3); /* A more subtle glow as the background now glows */
+    }
     .video-wrapper {
         position: relative; /* Needed for positioning the overlay and iframe */
         padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
-        background-color: #333333; /* Darker placeholder color */
+        background-color: var(--surface-color); /* Darker placeholder color */
         border-radius: 12px; /* Rounded corners for the video */
         overflow: hidden; /* Keeps the overlay and iframe within the rounded corners */
         margin-bottom: 0.75rem;
     }
-
     .video-wrapper .video-iframe {
         position: absolute;
         top: 0;
@@ -131,30 +147,14 @@
         height: 100%;
         border: none;
     }
-
-    /* This is the new hover overlay */
-    .video-wrapper::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.15); /* Subtle white overlay on hover for dark theme */
-        opacity: 0; /* Hidden by default */
-        transition: opacity 0.2s ease-in-out; /* Smooth transition */
-    }
-
-    .video-container:hover .video-wrapper::after {
-        opacity: 1; /* Show the overlay on hover */
-    }
-
     .video-title {
         font-weight: 500;
         font-size: 1rem;
         line-height: 1.4;
-        color: #e0e0e0; /* Light grey title */
+        color: var(--primary-text-color);
         margin: 0;
+        padding: 0 0.25rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
 </style>
 <body>
@@ -173,5 +173,13 @@
     </form>
     <div id="video"></div>
 </body>
+<script>
+    // This script tracks the mouse position and updates CSS variables for the background glow effect.
+    document.addEventListener('mousemove', (e) => {
+        // We set the CSS variables --mouse-x and --mouse-y to the cursor's position.
+        document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+        document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+</script>
 <script src="app.js"></script>
 </html>
