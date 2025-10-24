@@ -9,6 +9,10 @@ async function get(value, count) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        if(count=="0"){
+        video.innerHTML='<p class="error-message">please select no. of results</p>'
+        return null;
+        }
         const data1 = await response.json();
         return data1;
     } catch (error) {
@@ -20,17 +24,12 @@ async function get(value, count) {
 
 submit.addEventListener("click", async ()=>{
     const value = input.value;
-    // Default to 10 results if no value is selected
-    const count = sort.value === 'Results' ? '10' : sort.value;
+    const count = sort.value;
     
     video.innerHTML="";
 
     const searchResults = await get(value, count); 
     console.log(searchResults);
-    // Only proceed if the fetch was successful and we have items
-    if (!searchResults || !searchResults.items) {
-        return;
-    }
 
     searchResults.items.forEach(element => {
         // Create the main container for one video item

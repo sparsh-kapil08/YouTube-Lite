@@ -12,12 +12,11 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 // Add a check to ensure the API key is loaded on startup.
 if (!YOUTUBE_API_KEY) {
     console.error("FATAL ERROR: YOUTUBE_API_KEY is not defined. Please create a .env file and add the key.");
-    process.exit(1); // Exit the process with an error code
+
 }
 
 app.get("/search", async (req, res) => {
-    const { value } = req.query; // Changed from 'q' to 'value'
-    const {count} =req.query;
+    const { value,count}=req.query;
 
 
     if (!value) {
